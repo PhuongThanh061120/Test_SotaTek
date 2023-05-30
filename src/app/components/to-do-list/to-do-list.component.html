@@ -1,0 +1,133 @@
+<div class="flex flex-col justify-between h-[90vh]">
+  <div>
+    <h1 class="text-center font-bold text-2xl">To do list</h1>
+    <div class="m-10">
+      <form [formGroup]="formSearch">
+        <app-form-control>
+          <app-input formControlName="keyword" [placeholder]="'Search ...'" (ngModelChange)="search()"></app-input>
+        </app-form-control>
+      </form>
+      <div class="mt-6 list">
+        <div class="mb-6 border" *ngFor="let item of listTask">
+          <div class="grid grid-cols-3 p-5">
+            <div class="ml-3 font-bold text-lg">
+              <label
+                class="mr-3"
+                nz-checkbox
+                [(ngModel)]="item.checked"
+                (ngModelChange)="onCheck(item)"
+                [nzDisabled]="item.readOnly"
+                ></label
+              >
+              <!-- <app-checkbox class="mr-3"  (onChange)="onCheck(item)"></app-checkbox> -->
+              {{item.name}}
+            </div>
+            <div></div>
+            <div class="flex">
+              <button
+                type="button"
+                class="w-full rounded bg-cyan-500 text-white mr-3"
+                nz-button
+                (click)="viewDetail(item)"
+              >
+                Detail
+              </button>
+              <button
+                type="button"
+                class="w-full rounded bg-rose-500 text-white"
+                nz-button
+                (click)="onRemove(item)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+          <div *ngIf="item.isShow" class="m-10">
+            <form [formGroup]="form">
+              <!-- <input class="border w-full p-2" type="text" formControlName="name" placeholder="Add new task ..."/> -->
+              <app-form-control>
+                <app-input [disabled]="item.readOnly" formControlName="name" [placeholder]="'Add new task ...'"></app-input>
+              </app-form-control>
+              <div class="mt-6">
+                <label class="font-bold">Description</label>
+                <app-form-control>
+                  <app-textarea [disabled]="item.readOnly" formControlName="description"></app-textarea>
+                </app-form-control>
+              </div>
+              <div class="mt-6 grid grid-cols-2 gap-10">
+                <div>
+                  <label class="font-bold">Due date</label>
+                  <app-form-control>
+                    <nz-date-picker
+                      [nzDisabled]="item.readOnly"
+                      class="w-full"
+                      [nzFormat]="formatDate"
+                      [nzAllowClear]="false"
+                      [nzDisabledDate]="disabledDate"
+                      formControlName="dueDate"
+                    ></nz-date-picker>
+                    <!-- <app-datepicker
+                      [allowClear]="false"
+                      [disabledDate]="disabledDate"
+                      formControlName="fromDate"
+                      [format]="formatDate"
+                      [showTime]="false"
+                    ></app-datepicker> -->
+                  </app-form-control>
+                </div>
+                <div>
+                  <label class="font-bold">Piority</label>
+                  <app-form-control>
+                    <app-select
+                      [disabled]="item.readOnly"
+                      class="flex-1 overflow-hidden"
+                      [options]="optionPiority"
+                      formControlName="piority"
+                      [allowClear]="false"
+                      [showSearch]="true"
+                      [placeholder]="'Tất cả'"
+                    ></app-select>
+                  </app-form-control>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="mt-10 w-full rounded bg-green-500 text-white"
+                nz-button
+                [disabled]="item.readOnly"
+                (click)="onUpdate(item)"
+              >
+                Update
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="showBulk" class="grid grid-cols-3 p-5 bg-slate-400">
+    <div class="ml-3 font-bold text-lg">Bulk Action</div>
+    <div></div>
+    <div class="flex">
+      <button
+        type="button"
+        class="w-full rounded bg-cyan-500 text-white mr-3"
+        nz-button
+        (click)="doneTask()"
+      >
+        Done
+      </button>
+      <button
+        type="button"
+        class="w-full rounded bg-rose-500 text-white"
+        nz-button
+        (click)="onRemoveAll()"
+      >
+        Remove
+      </button>
+    </div>
+  </div>
+
+</div>
+

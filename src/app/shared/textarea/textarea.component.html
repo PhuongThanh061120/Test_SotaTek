@@ -1,0 +1,14 @@
+<div class="flex">
+  <textarea
+  [rows]="rows"
+  nz-input
+  nzAutosize=""
+  placeholder="{{ placeholder }}"
+  [(ngModel)]="value"
+  (ngModelChange)="onChange($event)"
+  [disabled]="disabled"
+  ></textarea>
+  <i *ngIf="allowCopy" class="cursor-pointer copy-icon" nz-icon nzType="icons:copy"></i>
+  <!-- author: longbb 
+  thêm nút copy vào trước chức năng để làm sau -->
+</div>

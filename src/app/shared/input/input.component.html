@@ -1,0 +1,9 @@
+<input
+  nz-input
+  placeholder="{{placeholder}}"
+  [(ngModel)]="value"
+  [disabled]="disabled"
+  (ngModelChange)="onChange($event)"
+  [nzSize]="size"
+  (keyup.enter)="onEnter($event)"
+/>
