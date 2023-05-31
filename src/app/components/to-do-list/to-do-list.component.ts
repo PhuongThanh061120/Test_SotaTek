@@ -1,6 +1,6 @@
 import { AppService } from './../../app.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DATE_FORMAT4 } from 'src/app/format.constants';
@@ -60,6 +60,7 @@ export class ToDoListComponent implements OnInit {
   getListTask() {
     if(this.str) {
       this.listTask = JSON.parse(this.str);
+      console.log(this.listTask);
       this.listTemp = this.listTask;
     }
   }
@@ -100,11 +101,13 @@ export class ToDoListComponent implements OnInit {
   onRemove(item: any) {
     this.listTask = this.listTask.filter((x: any) => x !== item);
 
-    if(!this.listTask.length) {
-      localStorage.removeItem('toDoList');
-    } else {
+    // if(!this.listTask.length) {
+    //   localStorage.removeItem('toDoList');
+    //   this.getListTask();
+    // } else {
       localStorage.setItem("toDoList", JSON.stringify(this.listTask));
-    }
+    // }
+    this.service.submitTrigger$.next({toDoList: this.listTask});
     this.service.removeTrigger$.next({toDoList: this.listTask});
   }
 
@@ -114,12 +117,14 @@ export class ToDoListComponent implements OnInit {
       if(x === item) {
         this.listTask[index] = {
           ...this.form.value,
+          dueDate: new Date(this.form.value?.dueDate),
           isShow: false,
           checked: false,
           readOnly: false
         }
       }
     });
+    this.listTask.sort(function(a, b) {return a.dueDate - b.dueDate});
     localStorage.setItem("toDoList", JSON.stringify(this.listTask));
   }
 
@@ -138,12 +143,15 @@ export class ToDoListComponent implements OnInit {
 
   onRemoveAll() {
     this.listTask = this.listTask.filter(item => !this.listChecked.includes(item));
-    if(!this.listTask.length) {
-      localStorage.removeItem('toDoList');
-    } else {
+    // if(!this.listTask.length) {
+    //   localStorage.removeItem('toDoList');
+    //   this.getListTask();
+      
+    // } else {
       localStorage.setItem("toDoList", JSON.stringify(this.listTask));
-    }
-    this.service.removeTrigger$.next({toDoList: this.listTask})
+    // }
+    this.service.submitTrigger$.next({toDoList: this.listTask});
+    this.service.removeTrigger$.next({toDoList: this.listTask});
     this.showBulk = false;
   }
 

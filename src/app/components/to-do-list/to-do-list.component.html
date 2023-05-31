@@ -10,7 +10,7 @@
       <div class="mt-6 list">
         <div class="mb-6 border" *ngFor="let item of listTask">
           <div class="grid grid-cols-3 p-5">
-            <div class="ml-3 font-bold text-lg">
+            <div class="col-span-2 text-left ml-3 font-bold text-lg">
               <label
                 class="mr-3"
                 nz-checkbox
@@ -22,7 +22,6 @@
               <!-- <app-checkbox class="mr-3"  (onChange)="onCheck(item)"></app-checkbox> -->
               {{item.name}}
             </div>
-            <div></div>
             <div class="flex">
               <button
                 type="button"
@@ -107,8 +106,7 @@
     </div>
   </div>
   <div *ngIf="showBulk" class="grid grid-cols-3 p-5 bg-slate-400">
-    <div class="ml-3 font-bold text-lg">Bulk Action</div>
-    <div></div>
+    <div class=" col-span-2 text-left ml-3 font-bold text-lg">Bulk Action</div>
     <div class="flex">
       <button
         type="button"

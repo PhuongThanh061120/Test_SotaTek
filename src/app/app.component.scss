@@ -1,0 +1,24 @@
+@media only screen and (max-width: 950px) {
+    /* Điều chỉnh kiểu dáng khi màn hình có độ rộng nhỏ hơn hoặc bằng 900px */
+    .responsive {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+    }
+    .border-r {
+        border-bottom: 1px solid black;
+    }
+  }
+
+  @media only screen and (max-width: 1300px) {
+    /* Điều chỉnh kiểu dáng khi màn hình có độ rộng nhỏ hơn hoặc bằng 1300px */
+    .responsive {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 12px;
+    }
+  }
